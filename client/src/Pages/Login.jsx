@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Contexts/AuthFile';
 import axios from 'axios';
-import { FiLock, FiMail, FiShield } from 'react-icons/fi';
+import { FiLock, FiMail, FiShield, FiAlertTriangle } from 'react-icons/fi';
 
 const Login = () => {
   const { user, loading, login } = useContext(AuthContext);
@@ -42,115 +42,112 @@ const Login = () => {
   if (loading || user) return null;
 
   return (
-    // Uses 100dvh to handle mobile browser address bars accurately
-    <div className="min-h-[100dvh] flex items-center justify-center bg-[#060910] relative overflow-hidden font-sans px-4 py-8">
+    <div className="min-h-[100dvh] flex items-center justify-center bg-[#090d16] relative overflow-hidden font-sans px-4 py-8 selection:bg-indigo-500 selection:text-white">
       
-      {/* Background Ambience - Simplified for Mobile Performance */}
-      <div className="absolute top-[-10%] left-[-10%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-indigo-600/10 rounded-full blur-[80px] lg:blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-[-10%] right-[-10%] w-[300px] lg:w-[600px] h-[300px] lg:h-[600px] bg-purple-600/10 rounded-full blur-[80px] lg:blur-[120px] pointer-events-none" />
+      {/* Dynamic Background Glows */}
+      <div className="absolute top-[-20%] left-[-10%] w-[400px] lg:w-[700px] h-[400px] lg:h-[700px] bg-indigo-600/15 rounded-full blur-[100px] lg:blur-[140px] pointer-events-none" />
+      <div className="absolute bottom-[-20%] right-[-10%] w-[400px] lg:w-[700px] h-[400px] lg:h-[700px] bg-violet-600/10 rounded-full blur-[100px] lg:blur-[140px] pointer-events-none" />
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="z-10 w-full max-w-[420px]"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="z-10 w-full max-w-[440px]"
       >
         {/* Branding Section */}
-        <div className="text-center mb-8 lg:mb-10">
-          <motion.div
-            initial={{ y: -10 }}
-            animate={{ y: 0 }}
-            className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-6"
-          >
-            <FiShield className="text-indigo-400 text-[10px]" />
-            <span className="text-indigo-400 text-[10px] font-black uppercase tracking-[0.2em]">Secure Gateway</span>
-          </motion.div>
+        <div className="text-center mb-8">
           
-          <h1 className="text-6xl lg:text-8xl font-black text-white tracking-tighter leading-none italic">
+          <h1 className="text-4xl font-black text-white tracking-tight">
             HRP<span className="text-indigo-500">.</span>
           </h1>
-          <p className="text-slate-500 text-xs lg:text-sm mt-3 font-bold uppercase tracking-widest opacity-60">Resource Planning System</p>
+          <p className="text-slate-400/60 text-xs font-semibold uppercase tracking-widest mt-1">Resource Planning System</p>
         </div>
 
         {/* Login Card */}
-        <div className="bg-white/[0.03] backdrop-blur-3xl border border-white/10 rounded-[2.5rem] p-8 lg:p-10 shadow-2xl relative">
-          <div className="mb-8">
-            <h2 className="text-2xl font-black text-white uppercase tracking-tight">Login</h2>
-            <p className="text-slate-500 text-xs font-medium mt-1">Access restricted medical database</p>
+        <div className="bg-white/[0.02] backdrop-blur-xl border border-white/[0.08] rounded-3xl p-6 sm:p-10 shadow-2xl relative shadow-black/40">
+          <div className="mb-6">
+            <h2 className="text-xl font-bold text-white tracking-tight">Welcome Back</h2>
+            <p className="text-slate-400 text-xs mt-1">Sign in to access secure clinical operations.</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
+          <form onSubmit={handleSubmit} className="space-y-4">
             
+            {/* Error Message Section */}
             <AnimatePresence mode="wait">
               {error && (
                 <motion.div 
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  className="bg-red-500/10 border border-red-500/20 text-red-400 text-[11px] font-bold py-3 px-4 rounded-xl flex items-center gap-3"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  className="bg-red-500/10 border border-red-500/20 text-red-400 text-xs py-3.5 px-4 rounded-xl flex items-center gap-3"
                 >
-                  <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse shrink-0" />
-                  {error}
+                  <FiAlertTriangle className="text-red-400 text-base shrink-0" />
+                  <span className="font-medium">{error}</span>
                 </motion.div>
               )}
             </AnimatePresence>
 
             {/* Email Field */}
-            <div className="space-y-2 group">
-              <label className="text-slate-500 text-[10px] font-black uppercase tracking-widest ml-1 group-focus-within:text-indigo-400 transition-colors">Credential Link</label>
+            <div className="space-y-1.5 group">
+              <label className="text-slate-400 text-[11px] font-bold uppercase tracking-wider ml-1 group-focus-within:text-indigo-400 transition-colors">
+                Email Address
+              </label>
               <div className="relative">
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-indigo-400 transition-colors" />
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors text-base" />
                 <input 
                   required
                   type="email" 
                   autoComplete="email"
                   placeholder="name@hospital.com"
-                  className="w-full bg-black/40 border border-white/5 rounded-2xl px-12 py-4 text-white placeholder:text-slate-700 focus:outline-none focus:border-indigo-500/50 transition-all text-sm font-medium"
+                  className="w-full bg-black/30 border border-white/[0.08] rounded-xl px-11 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/60 transition-all text-sm font-medium"
                   onChange={(e) => setFormData({...formData, email: e.target.value})}
                 />
               </div>
             </div>
 
             {/* Password Field */}
-            <div className="space-y-2 group">
-              <div className="flex justify-between items-center ml-1">
-                <label className="text-slate-500 text-[10px] font-black uppercase tracking-widest group-focus-within:text-indigo-400 transition-colors">Access Key</label>
-              </div>
+            <div className="space-y-1.5 group">
+              <label className="text-slate-400 text-[11px] font-bold uppercase tracking-wider ml-1 group-focus-within:text-indigo-400 transition-colors">
+                Password
+              </label>
               <div className="relative">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-600 group-focus-within:text-indigo-400 transition-colors" />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-indigo-400 transition-colors text-base" />
                 <input 
                   required
                   type="password" 
                   autoComplete="current-password"
                   placeholder="••••••••"
-                  className="w-full bg-black/40 border border-white/5 rounded-2xl px-12 py-4 text-white placeholder:text-slate-700 focus:outline-none focus:border-indigo-500/50 transition-all text-sm font-medium"
+                  className="w-full bg-black/30 border border-white/[0.08] rounded-xl px-11 py-3.5 text-white placeholder:text-slate-600 focus:outline-none focus:border-indigo-500/60 focus:ring-1 focus:ring-indigo-500/60 transition-all text-sm font-medium"
                   onChange={(e) => setFormData({...formData, password: e.target.value})}
                 />
               </div>
             </div>
 
             {/* Submit Button */}
-            <button
+            <motion.button
+              whileHover={!isSubmitting ? { scale: 1.01 } : {}}
+              whileTap={!isSubmitting ? { scale: 0.99 } : {}}
               type="submit"
               disabled={isSubmitting}
-              className={`w-full py-5 rounded-2xl font-black text-[10px] lg:text-xs uppercase tracking-[0.2em] text-white transition-all mt-4 shadow-xl active:scale-[0.98] ${
+              className={`w-full py-4 rounded-xl font-bold text-sm text-white transition-all mt-6 shadow-lg shadow-indigo-900/10 border border-indigo-500/30 active:scale-[0.99] ${
                 isSubmitting 
-                ? 'bg-slate-800 cursor-wait' 
-                : 'bg-indigo-600 hover:bg-indigo-500 shadow-indigo-900/20'
+                ? 'bg-slate-800/80 cursor-wait border-slate-700 text-slate-400' 
+                : 'bg-indigo-600 hover:bg-indigo-500'
               }`}
             >
               {isSubmitting ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
-                  Authorizing...
+                  Authenticating...
                 </span>
-              ) : 'Establish Connection'}
-            </button>
+              ) : 'Sign In'}
+            </motion.button>
           </form>
 
           {/* Footer Decoration */}
-          <div className="mt-8 pt-6 border-t border-white/5 flex flex-col items-center gap-2">
-            <p className="text-[9px] text-slate-600 uppercase tracking-[0.2em] font-bold">
-              Secure Terminal &bull; Layer 7 Encrypted
+          <div className="mt-6 pt-5 border-t border-white/[0.04] text-center">
+            <p className="text-[10px] text-slate-500/80 uppercase tracking-widest font-semibold flex items-center justify-center gap-2">
+              Secure Login
             </p>
           </div>
         </div>

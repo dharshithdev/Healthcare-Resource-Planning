@@ -23,6 +23,7 @@ import AdminAppointments from './Pages/Admin/AdminAppointment';
 import AdminPatients from './Pages/Admin/AdminPatients';
 import CreateUser from './Pages/Admin/CreateUser';
 import AdminSettings from './Pages/Admin/AdminSettings';
+import Home from './Pages/Home';
 
 const RootRedirect = () => {
   const { user, loading } = useContext(AuthContext);
@@ -33,7 +34,7 @@ const RootRedirect = () => {
     </div>
   ); 
 
-  if (!user) return <Navigate to="/login" />;
+  if (!user) return <Navigate to="/home" />;
 
   // Logic to send users to the right "Home"
   if (user.role === 'Admin') return <Navigate to="/admin/dashboard" />;
@@ -50,6 +51,7 @@ function App() {
         <Routes>
           {/* Main Traffic Controller */}
           <Route path="/" element={<RootRedirect />} />
+          <Route path="/home" element={<Home />} />
           <Route path="/unauthorized" element={<Unauthorized />} />
           {/* Public Route */}
           <Route path="/login" element={<Login />} />
