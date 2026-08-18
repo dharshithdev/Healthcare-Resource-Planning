@@ -1,0 +1,37 @@
+services:
+  # 🗄️ Database Service
+  hrp-db:
+    image: mongo:latest
+    container_name: hrp-db
+    restart: always
+    ports:
+      - "27017:27017"
+    volumes:
+      - hrp-mongo-data:/data/db
+
+  # ⚙️ Backend API Service
+  hrp-server:
+    build: ./server
+    container_name: hrp-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=${PORT}
+      - MONGO_URI=mongodb://hrp-db:27017/hrp_db
+      - JWT_SECRET=${JWT_SECRET}
+    depends_on:
+      - hrp-db
+
+  # 💻 Frontend App Service
+  hrp-client:
+    build: ./client
+    container_name: hrp-frontend
+    restart: always
+    ports:
+      - "3000:80"
+    depends_on:
+      - hrp-server
+
+volumes:
+  hrp-mongo-data:
