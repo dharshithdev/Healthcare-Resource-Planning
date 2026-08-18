@@ -18,7 +18,7 @@ services:
       - "5000:5000"
     environment:
       - PORT=${PORT}
-      - MONGO_URI=mongodb://hrp-db:27017/hrp_db
+      - MONGO_URI=${MONGO_URI}
       - JWT_SECRET=${JWT_SECRET}
     depends_on:
       - hrp-db
