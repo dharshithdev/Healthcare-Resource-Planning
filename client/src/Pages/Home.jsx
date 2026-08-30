@@ -50,7 +50,7 @@ const Home = () => {
           >
             <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }} className="w-full sm:w-auto">
               <Link to="/portal" className="flex items-center justify-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-8 py-4 rounded-xl shadow-xl shadow-indigo-100 w-full transition-all">
-                <span>Get Started Now</span>
+                <span>Get Started Nowww</span>
                 <FiArrowRight />
               </Link>
             </motion.div>

@@ -28,7 +28,13 @@ const Schedule = () => {
       const res = await axios.get(`${process.env.REACT_APP_API_URL}/api/doctor/schedule`, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      setAvailability(res.data || []);
+      const schedule = Array.isArray(res.data)
+  ? res.data
+  : Array.isArray(res.data?.availability)
+    ? res.data.availability
+    : [];
+
+setAvailability(schedule);
     } catch (err) {
       console.error("Fetch error", err);
     } finally {
