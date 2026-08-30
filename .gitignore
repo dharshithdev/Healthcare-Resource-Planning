@@ -12,3 +12,6 @@ Client/build/
 
 # System files
 .DS_Store
+
+# Env
+.env
